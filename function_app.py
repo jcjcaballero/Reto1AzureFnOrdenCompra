@@ -6,7 +6,7 @@ from models import Order
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
 @app.route(route="registraOrdenCompra")
-def registrarOrdenVenta(req: func.HttpRequest) -> func.HttpResponse:
+def registraOrdenCompra(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Processing buy order request')
 
     order = Order.generate_random_order()

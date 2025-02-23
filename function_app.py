@@ -16,8 +16,13 @@ clienteBus = ServiceBusClient.from_connection_string(service_bus_connection_stri
 @app.route(route="registraOrdenCompra")
 def registraOrdenCompra(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Processing buy order request')
-
-    order = Order.generate_random_order()
+    
+    runnerId = 0    
+    try:
+        runnerId = req.get_json().get('runnerId')
+    except ValueError:
+        pass    
+    order = Order.generate_random_order(runnerId)
     insert_order(order, client, clienteBus)
     
     return func.HttpResponse(f"Order {order.id} created successfully", status_code=201)
